@@ -111,7 +111,56 @@ def get_name_from_path(f):
     return f[f.rindex("/")+1: ]
 
 '''
-split all data into train set and test set
+split all data into train set, validation set and test set
+input: parent path of trainset folder and testset folder, the ratio of test/all data
+output: void
+'''
+def split_into_train_valid_and_test_sets(datapath, ratio1, ratio2):
+    assert ratio1 <= 1 and ratio1 >= 0
+    assert ratio2 <= 1 and ratio2 >= 0
+    test_path = os.path.join(datapath, "test/")
+    valid_path = os.path.join(datapath, "valid/")
+    train_path = os.path.join(datapath, "train/")
+    print(test_path)
+    subset_paths = get_subsets_path(train_path)
+    subsets = get_subsets(train_path)
+    print(subset_paths)
+    print(subsets)
+    for i, path in enumerate(subset_paths):
+        curr = subsets[i]
+
+        temp = valid_path + curr + "/"
+        os.makedirs(os.path.dirname(temp), exist_ok=True)
+        
+        images = glob(path + "*.jpg")
+        rand = random.sample(images, int(ratio1*len(images)))
+        print(curr , " -- size of non-trainset: " , len(rand) , ", size of trainset: " , (len(images)-len(rand)))
+
+        for image in rand:
+            dst = temp + get_name_from_path(image)
+            os.rename(image, dst)
+    
+    subset_paths = get_subsets_path(valid_path)
+    subsets = get_subsets(valid_path)
+    print(subset_paths)
+    print(subsets)
+    for i, path in enumerate(subset_paths):
+        curr = subsets[i]
+
+        temp = test_path + curr + "/"
+        os.makedirs(os.path.dirname(temp), exist_ok=True)
+        
+        images = glob(path + "*.jpg")
+        rand = random.sample(images, int(ratio2*len(images)))
+        print(curr , " -- size of testset: " , len(rand) , ", size of validset: " , (len(images)-len(rand)))
+
+        for image in rand:
+            dst = temp + get_name_from_path(image)
+            os.rename(image, dst)
+            
+            
+'''
+split all data into train set, validation set and test set
 input: parent path of trainset folder and testset folder, the ratio of test/all data
 output: void
 '''
@@ -158,6 +207,36 @@ def split_into_train_valid_and_test_sets(datapath, ratio1, ratio2):
             dst = temp + get_name_from_path(image)
             os.rename(image, dst)
     
+'''
+split all data into train set and test set
+input: parent path of trainset folder and testset folder, the ratio of test/all data
+output: void
+'''
+def split_into_train_and_test_sets(datapath, ratio1, ratio2):
+    assert ratio1 <= 1 and ratio1 >= 0
+    assert ratio2 <= 1 and ratio2 >= 0
+    test_path = os.path.join(datapath, "test/")
+#    valid_path = os.path.join(datapath, "valid/")
+    train_path = os.path.join(datapath, "train/")
+    print(test_path)
+    subset_paths = get_subsets_path(train_path)
+    subsets = get_subsets(train_path)
+    print(subset_paths)
+    print(subsets)
+    for i, path in enumerate(subset_paths):
+        curr = subsets[i]
+
+        temp = valid_path + curr + "/"
+        os.makedirs(os.path.dirname(temp), exist_ok=True)
+        
+        images = glob(path + "*.jpg")
+        rand = random.sample(images, int(ratio1*len(images)))
+        print(curr , " -- size of test set: " , len(rand) , ", size of trainset: " , (len(images)-len(rand)))
+
+        for image in rand:
+            dst = temp + get_name_from_path(image)
+            os.rename(image, dst)
+
             
             
 ######################### main functions #########################          
@@ -195,16 +274,16 @@ tfms = get_transforms(do_flip=True, flip_vert=True)
 data = ImageDataBunch.from_folder(path, test="test", ds_tfms=tfms, bs=16)
 
 
-###########################################################################     
-############################ model training ###############################
-###########################################################################
-
-learn = create_cnn(data,models.resnet34,metrics=error_rate)
-
-learn.model
-
-learn.lr_find(start_lr=1e-6,end_lr=1e1)
-learn.recorder.plot()
+############################################################################     
+############################# model training ###############################
+############################################################################
+#
+#learn = create_cnn(data,models.resnet34,metrics=error_rate)
+#
+#learn.model
+#
+#learn.lr_find(start_lr=1e-6,end_lr=1e1)
+#learn.recorder.plot()
 #
 ## create directories for train and test sets
 #for subset in subsets:
