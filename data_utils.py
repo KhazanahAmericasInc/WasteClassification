@@ -447,18 +447,44 @@ def rename_images(src, wastetype):
 
 # In[ ]:
 
-
-
-
-
-# In[ ]:
-
-
+#waste_type = ["trash", "compost", "recycle"]
+#for w in waste_type:
+#    rename_images(("./data-merged/test/" + w + "/"), w)
 
 
 
 # In[ ]:
 
+def rename_and_move_images(src, dst, wastetype):
+    try:
+        files = get_subsets(src)
+        for file in files:
+            os.rename(src + file, dst + file)
+#             shutil.move(src+file, dst)
+#        os.rmdir(src)
+    except OSError as e:
+        print ("Error: %s - %s." % (e.filename, e.strerror))
+        
 
 
 
+# In[ ]:
+
+def copytree(src, dst):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d)
+        else:
+            shutil.copy2(s, d)
+            
+            
+waste_type = ["Trash", "Compost", "Recycling"]
+for w in waste_type:
+    copytree("../waste-classifier/clumped_kitchen_test_data_v3/" + w + "/", "../waste-classifier/original_data/" + w + "/")
+    
+    
+    
+    
+    
