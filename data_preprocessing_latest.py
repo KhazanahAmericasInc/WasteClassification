@@ -269,7 +269,7 @@ waste_paths = ["./original_data/"+ w + "/" for w in waste_types]
 create_folders(waste_paths)
 rename_and_move_images("./original_data/plastic/","./original_data/recycle/")
 rename_and_move_images("./original_data/metal/","./original_data/recycle/")
-rename_and_move_images("./original_data/glass/","./original_data/trash/")
+rename_and_move_images("./original_data/glass/","./original_data/recycle/")
 rename_and_move_images("./original_data/cardboard/","./original_data/compost/")
 rename_and_move_images("./original_data/paper/","./original_data/compost/")
 
