@@ -455,16 +455,16 @@ def rename_images(src, wastetype):
 
 # In[ ]:
 
-def rename_and_move_images(src, dst, wastetype):
-    try:
-        files = get_subsets(src)
-        for file in files:
-            os.rename(src + file, dst + file)
-#             shutil.move(src+file, dst)
-#        os.rmdir(src)
-    except OSError as e:
-        print ("Error: %s - %s." % (e.filename, e.strerror))
-        
+#def rename_and_move_images(src, dst, wastetype):
+#    try:
+#        files = get_subsets(src)
+#        for file in files:
+#            os.rename(src + file, dst + file)
+##             shutil.move(src+file, dst)
+##        os.rmdir(src)
+#    except OSError as e:
+#        print ("Error: %s - %s." % (e.filename, e.strerror))
+#        
 
 
 
@@ -479,12 +479,12 @@ def copytree(src, dst):
         else:
             shutil.copy2(s, d)
             
-            
-waste_type = ["Trash", "Compost", "Recycling"]
-for w in waste_type:
-    copytree("../waste-classifier/clumped_kitchen_test_data_v3/" + w + "/", "../waste-classifier/original_data/" + w + "/")
-    
-    
+#            
+#waste_type = ["Trash", "Compost", "Recycling"]
+#for w in waste_type:
+#    copytree("../waste-classifier/clumped_kitchen_test_data_v3/" + w + "/", "../waste-classifier/original_data/" + w + "/")
+#    
+#    
     
     
     
