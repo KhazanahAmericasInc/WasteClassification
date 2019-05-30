@@ -124,7 +124,22 @@ learn.save(output_path, return_path=True)
 model_load = cnn_learner(data,models.resnet34,metrics=error_rate)
 model_load = model_load.load('/content/processed_data/models/../../trained_models/waste_classification_2019-05-23 21:56:02')
 
+import datetime
+start_time = datetime.datetime.now()
+preds = learn.get_preds(ds_type=DatasetType.Test)
+end_time = datetime.datetime.now()
+duration = (end_time - start_time).total_seconds() * 1000
+print(duration)
+
 preds_load = model_load.get_preds(ds_type=DatasetType.Test)
+
+import glob
+file_size = len(glob.glob('./processed_data/test/*/*'))
+
+speed = duration/file_size
+print("CPU speed is ")
+print(speed)
+print("/milliseconds")
 
 max_idxs = np.asarray(np.argmax(preds_load[0],axis=1))
 
