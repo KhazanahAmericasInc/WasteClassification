@@ -3,6 +3,9 @@
 Prerequisites:
 * To use fast.ai library on anaconda, install pytorch
 
+Note:
+Due to exceeding GitHub's file size limit of 100.00 MB, the exported keras model h5 file is here https://drive.google.com/open?id=18LgNTAl46a3vXHq-m9NFPCxuF8ZiLcuv
+
 Recourses:
 
 * Get data from https://github.com/garythung/trashnet/blob/master/data/dataset-resized.zip
