@@ -117,3 +117,4 @@ Recourses:
                     -   publish model
 
                         -   rejected, due to model size limitation
+                        -   can be overcome if we purchase google cloud
